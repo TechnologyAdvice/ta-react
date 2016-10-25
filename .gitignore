@@ -1,0 +1,7 @@
+.DS_STORE
+*.log
+dist
+coverage
+node_modules
+components
+redux

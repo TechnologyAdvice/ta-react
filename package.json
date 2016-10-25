@@ -1,0 +1,38 @@
+{
+  "name": "ta-react",
+  "version": "0.0.0",
+  "description": "Common React components and utilities",
+  "main": "index.js",
+  "files": [
+    "components",
+    "redux"
+  ],
+  "scripts": {
+    "lint": "eslint src",
+    "test": "mocha",
+    "build": "babel src --out-dir dist",
+    "prepublish": "npm run build && cp -r dist/. ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/technologyadvice/ta-react.git"
+  },
+  "author": "TechnologyAdvice <devteam@technologyadvice.com> (http://technologyadvice.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/technologyadvice/ta-react/issues"
+  },
+  "homepage": "https://github.com/technologyadvice/ta-react#readme",
+  "dependencies": {
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-1": "^6.16.0",
+    "eslint": "^3.8.1",
+    "eslint-config-ta": "^5.2.0",
+    "ta-scripts": "^2.5.2"
+  }
+}
