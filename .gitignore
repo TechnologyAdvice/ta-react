@@ -3,5 +3,5 @@
 dist
 coverage
 node_modules
-components
-redux
+./components
+./redux
