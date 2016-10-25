@@ -11,7 +11,10 @@
     "lint": "eslint src",
     "test": "mocha",
     "build": "babel src --out-dir dist",
-    "prepublish": "npm run build && cp -r dist/. ."
+    "prerelease": "npm run build && cp -r dist/. .",
+    "release:major": "npm run prerelease && ta-script npm/release.sh major",
+    "release:minor": "npm run prerelease && ta-script npm/release.sh minor",
+    "release:patch": "npm run prerelease && ta-script npm/release.sh patch"
   },
   "repository": {
     "type": "git",
