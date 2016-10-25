@@ -1,5 +1,15 @@
 # ta-react
 
+## Table of Contents
+1. [Installation](#installation)
+1. [Redux](#redux)
+
+## Installation
+
+```bash
+npm i --save ta-react
+```
+
 ## Redux
 
 ### `createReducer`
