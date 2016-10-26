@@ -41,8 +41,11 @@ for the store.
 
 ```js
 import createStore from 'ta-react/redux/create-store'
+import rootReducer from './rootReducer'
 
-const store = createStore(rootReducer)
+const INTITIAL_STATE = undefined
+
+const store = createStore(rootReducer, INTITIAL_STATE)
 ```
 
 ## Releasing
