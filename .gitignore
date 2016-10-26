@@ -1,8 +1,6 @@
 .DS_STORE
 *.log
-dist
-coverage
+coverage/
 node_modules
-components
-redux
-!src/*
+components/
+redux/

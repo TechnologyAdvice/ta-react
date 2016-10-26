@@ -10,11 +10,12 @@
   "scripts": {
     "lint": "eslint src",
     "test": "mocha",
-    "build": "babel src --out-dir dist",
-    "prerelease": "npm run build && cp -r dist/. .",
-    "release:major": "npm run prerelease && ta-script npm/release major",
-    "release:minor": "npm run prerelease && ta-script npm/release minor",
-    "release:patch": "npm run prerelease && ta-script npm/release patch"
+    "build": "echo \"...building to root\" && babel src --out-dir .",
+    "prerelease": "npm run build",
+    "postrelease": "echo \"...cleaning up root\" && rm -rf redux components",
+    "release:major": "npm run prerelease && ta-scrip npm/release major",
+    "release:minor": "npm run prerelease && ta-scrip npm/release minor",
+    "release:patch": "npm run prerelease && ta-scrip npm/release patch"
   },
   "repository": {
     "type": "git",
