@@ -44,3 +44,13 @@ import createStore from 'ta-react/redux/create-store'
 
 const store = createStore(rootReducer)
 ```
+
+## Releasing
+
+On the latest clean `master`:
+
+```sh
+npm run release:major
+npm run release:minor
+npm run release:patch
+```
