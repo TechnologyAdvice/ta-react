@@ -12,9 +12,9 @@
     "test": "mocha",
     "build": "babel src --out-dir dist",
     "prerelease": "npm run build && cp -r dist/. .",
-    "release:major": "npm run prerelease && ta-script npm/release.sh major",
-    "release:minor": "npm run prerelease && ta-script npm/release.sh minor",
-    "release:patch": "npm run prerelease && ta-script npm/release.sh patch"
+    "release:major": "npm run prerelease && ta-script npm/release major",
+    "release:minor": "npm run prerelease && ta-script npm/release minor",
+    "release:patch": "npm run prerelease && ta-script npm/release patch"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/technologyadvice/ta-react#readme",
   "dependencies": {
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
