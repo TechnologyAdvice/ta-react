@@ -12,6 +12,23 @@ npm i --save ta-react
 
 ## Redux
 
+### `createConstants`
+`createConstants(constants: Array<String>) => Object`
+
+Creates an object with mirrored key/values from an array of strings.
+
+```js
+const constants = createConstants([
+ 'USER_FETCH_REQUEST',
+ 'USER_FETCH_SUCCESS',
+ 'USER_FETCH_FAILURE',
+])
+
+constants.USER_FETCH_REQUEST // => 'USER_FETCH_REQUEST'
+constants.USER_FETCH_SUCCESS // => 'USER_FETCH_SUCCESS'
+constants.USER_FETCH_FAILURE // => 'USER_FETCH_FAILURE'
+```
+
 ### `createReducer`
 `createReducer(actionHandlers: Object, initialState: any) => Function`
 
