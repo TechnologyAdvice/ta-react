@@ -5,14 +5,15 @@
   "main": "index.js",
   "files": [
     "components",
-    "redux"
+    "redux",
+    "index.js"
   ],
   "scripts": {
     "lint": "eslint src",
     "test": "mocha",
     "build": "echo \"...building to root\" && babel src --out-dir .",
     "prerelease": "npm run build",
-    "postrelease": "echo \"...cleaning up root\" && rm -rf redux components",
+    "postrelease": "echo \"...cleaning up root\" && rm -rf redux components index.js",
     "release:major": "npm run prerelease && ta-script npm/release major",
     "release:minor": "npm run prerelease && ta-script npm/release minor",
     "release:patch": "npm run prerelease && ta-script npm/release patch"
