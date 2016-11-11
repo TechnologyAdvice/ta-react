@@ -1,6 +1,5 @@
 .DS_STORE
 *.log
 coverage/
-node_modules
-components/
-redux/
+node_modules/
+dist/
