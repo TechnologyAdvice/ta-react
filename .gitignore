@@ -1,6 +1,12 @@
 .DS_STORE
 *.log
 coverage/
-node_modules
+node_modules/
+
+# assets built to root for publish
 components/
 redux/
+index.js
+
+# never ignore src nor its contents
+!src/**/*
