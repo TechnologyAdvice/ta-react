@@ -140,7 +140,7 @@ function createModule(namespace, createDefinition) {
 
     acc[eventType] = generatedEventCreator
     return acc
-  })
+  }, {})
 
   // ----------------------------------
   // Others
