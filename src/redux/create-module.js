@@ -3,6 +3,9 @@ import createReducer from './create-reducer'
 import { mapKeys } from '../lib'
 
 function createModule(namespace, createDefinition) {
+  // ======================================================
+  // Validate Arguments
+  // ======================================================
   // Ensure that a valid namespace and definition creator were provided.
   invariant(
     typeof namespace === 'string',
@@ -18,12 +21,18 @@ function createModule(namespace, createDefinition) {
     typeof createDefinition
   )
 
+  // ======================================================
+  // Base Module
+  // ======================================================
   // Generate the base definition for this module. We provide it an object
   // which references what will become its final, generated module so that
   // it can close over it and access it as needed.
   const generatedModule = {}
   const definition = createDefinition(generatedModule)
 
+  // ----------------------------------
+  // Validate Definition
+  // ----------------------------------
   // Ensure that the generated definition conforms to the required interface.
   invariant(
     typeof definition === 'object',
@@ -55,6 +64,9 @@ function createModule(namespace, createDefinition) {
     typeof definition.handlers
   )
 
+  // ----------------------------------
+  // Validate Events and Handlers
+  // ----------------------------------
   // Ensure that all events local to this module are valid and have handlers.
   const eventTypes = Object.keys(definition.events)
   const eventErrors = eventTypes.reduce((errors, eventType) => {
@@ -89,6 +101,13 @@ function createModule(namespace, createDefinition) {
     eventErrors.map(err => `> ${err}`).join('\n')
   )
 
+  // ======================================================
+  // Finish Module
+  // ======================================================
+
+  // ----------------------------------
+  // Constants
+  // ----------------------------------
   // Interface conformance checks complete, begin generating the module
   const generateConstant = (eventType) => `@@${namespace}/${eventType}`
   generatedModule.constants = eventTypes.reduce((acc, eventType) => {
@@ -96,28 +115,41 @@ function createModule(namespace, createDefinition) {
     return acc
   }, {})
 
+  // ----------------------------------
+  // Reducer
+  // ----------------------------------
   // Generate reducer based on provided event handlers.
   generatedModule.reducer = createReducer(
     mapKeys(generateConstant, definition.handlers),
     definition.initialState
   )
 
+  // ----------------------------------
+  // Events
+  // ----------------------------------
   // Generate event creators that automatically apply a namespaced `type`
   // property to the action object.
   generatedModule.events = eventTypes.reduce((acc, eventType) => {
     const namespacedEventType = generatedModule.constants[eventType]
     const liftedEventCreator = definition.events[eventType]
+
     function generatedEventCreator(...args) {
       const liftedResult = liftedEventCreator(...args)
       return { ...liftedResult, type: namespacedEventType }
     }
+
     acc[eventType] = generatedEventCreator
     return acc
   })
 
-  // Expose selectors and actions, no transformations needed.
-  generatedModule.selectors = definition.selectors
-  generatedModule.actions = definition.actions
+  // ----------------------------------
+  // Others
+  // ----------------------------------
+  // Expose keys where no transformations are needed.
+  generatedModule.initialState = { ...definition.initialState }
+  generatedModule.handlers = { ...definition.handlers }
+  generatedModule.selectors = { ...definition.selectors }
+  generatedModule.actions = { ...definition.actions }
 
   return generatedModule
 }
