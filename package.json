@@ -3,20 +3,13 @@
   "version": "1.1.1",
   "description": "Common React components and utilities",
   "main": "index.js",
-  "files": [
-    "components",
-    "redux",
-    "index.js"
-  ],
   "scripts": {
     "lint": "eslint src",
     "test": "mocha",
-    "build": "echo \"...building to root\" && babel src --out-dir .",
-    "prerelease": "npm run build",
-    "postrelease": "echo \"...cleaning up root\" && rm -rf redux components index.js",
-    "release:major": "npm run prerelease && ta-script npm/release major && npm run postrelease",
-    "release:minor": "npm run prerelease && ta-script npm/release minor && npm run postrelease",
-    "release:patch": "npm run prerelease && ta-script npm/release patch && npm run postrelease"
+    "build": "babel src --out-dir dist && cp package.json README.md dist",
+    "release:major": "npm run build && cd dist && ta-script npm/release major",
+    "release:minor": "npm run build && cd dist && ta-script npm/release minor",
+    "release:patch": "npm run build && cd dist && ta-script npm/release patch"
   },
   "repository": {
     "type": "git",

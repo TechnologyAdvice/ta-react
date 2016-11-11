@@ -74,7 +74,3 @@ npm run release:major
 npm run release:minor
 npm run release:patch
 ```
-
-**Heads Up!**
-
-The `/src` directory is flattened to the root of the project on `prerelease` to allow imports like `'ta-react/redux/create-store'`.  It cleans up on success.  If it fails run `npm run postrelease` manually to clean up.
