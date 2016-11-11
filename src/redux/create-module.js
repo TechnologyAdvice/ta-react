@@ -1,11 +1,6 @@
 import invariant from 'invariant'
 import createReducer from './create-reducer'
-
-const mapKeys = (fn, obj) => Object.keys(obj)
-  .reduce((acc, key) => {
-    acc[fn(key)] = obj[key]
-    return acc
-  }, {})
+import { mapKeys } from '../lib'
 
 function createModule(namespace, createDefinition) {
   // Ensure that a valid namespace and definition creator were provided.
