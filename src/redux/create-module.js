@@ -37,30 +37,30 @@ function createModule(namespace, createDefinition) {
   invariant(
     typeof definition === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The value ` +
-    `returned from \`createDefinition\` must be an object. Instead, what was ` +
-    `received was of type: %s.`,
+    'returned from \`createDefinition\` must be an object. Instead, what was ' +
+    'received was of type: %s.',
     typeof definition
   )
   invariant(
     definition.initialState != null, // eslint-disable-line
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
-    `returned from \`createDefinition\` must define an \`initialState\` ` +
-    `property that is a not a null or undefined value. Instead, what was ` +
-    `received was of type: %s.`,
+    'returned from \`createDefinition\` must define an \`initialState\` ' +
+    'property that is a not a null or undefined value. Instead, what was ' +
+    'received was of type: %s.',
     typeof definition.initialState
   )
   invariant(
     typeof definition.events === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
-    `returned from \`createDefinition\` must define an \`events\` property ` +
-    `that is an object. Instead, what was received was of type: %s.`,
+    'returned from \`createDefinition\` must define an \`events\` property ' +
+    'that is an object. Instead, what was received was of type: %s.',
     typeof definition.events
   )
   invariant(
     typeof definition.handlers === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
-    `returned from \`createDefinition\` must define a \`handlers\` property ` +
-    `that is an object. Instead, what was received was of type: %s.`,
+    'returned from \`createDefinition\` must define a \`handlers\` property ' +
+    'that is an object. Instead, what was received was of type: %s.',
     typeof definition.handlers
   )
 
@@ -87,7 +87,7 @@ function createModule(namespace, createDefinition) {
     if (typeof handler !== 'function') {
       return errors.concat([
         `Event ${eventType} is defined as a property on your definition ` +
-        `object, but it is not a function. Please check its type.`,
+        'object, but it is not a function. Please check its type.',
       ])
     }
     return errors
@@ -96,7 +96,7 @@ function createModule(namespace, createDefinition) {
   invariant(
     !eventErrors.length,
     `Error in \`createModule\` for the "${namespace}" namespace. All events ` +
-    `defined must be valid and have an associated event handler. The ` +
+    'defined must be valid and have an associated event handler. The ' +
     `following issues were found:\n%s`,
     eventErrors.map(err => `> ${err}`).join('\n')
   )
