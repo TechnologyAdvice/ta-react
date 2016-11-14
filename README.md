@@ -1,4 +1,6 @@
 # ta-react
+[![Circle CI](https://img.shields.io/circleci/project/github/TechnologyAdvice/ta-react/master.svg?style=flat-square)](https://circleci.com/gh/TechnologyAdvice/ta-react/tree/master)
+[![Codecov](https://img.shields.io/codecov/c/github/TechnologyAdvice/ta-react/master.svg?style=flat-square)](https://codecov.io/gh/TechnologyAdvice/ta-react)
 
 ## Table of Contents
 1. [Installation](#installation)
