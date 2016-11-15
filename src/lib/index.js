@@ -1,1 +1,1 @@
-export { default as mapKeys } from './mapKeys'
+export { default as mapKeys } from './map-keys'
