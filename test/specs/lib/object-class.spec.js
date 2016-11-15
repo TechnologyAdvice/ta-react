@@ -1,4 +1,4 @@
-import objectClass from '../../../src/lib/object-class'
+import objectClass from '../../../src/lib/get-class'
 
 describe('(Method) objectClass', () => {
   it('returns `Undefined` when called without an argument', () => {

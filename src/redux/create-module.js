@@ -1,6 +1,6 @@
 import invariant from 'invariant'
 import createReducer from './create-reducer'
-import { mapKeys, objectClass } from '../lib'
+import { mapKeys, getClass } from '../lib'
 
 function createModule(namespace, createDefinition) {
   // ======================================================
@@ -8,17 +8,17 @@ function createModule(namespace, createDefinition) {
   // ======================================================
   // Ensure that a valid namespace and definition creator were provided.
   invariant(
-    objectClass(namespace) === 'string',
+    getClass(namespace) === 'string',
     '`createModule` requires a string argument `namespace` to identify your ' +
     'module. Instead, what was received was of type: %s.',
-    objectClass(namespace)
+    getClass(namespace)
   )
   invariant(
-    objectClass(createDefinition) === 'function',
+    getClass(createDefinition) === 'function',
     '`createModule` requires an argument `createDefinition` which must be a ' +
     `function. Instead, while, generating the module for the "${namespace}" ` +
     'namespace, what was received was of type: %s.',
-    objectClass(createDefinition)
+    getClass(createDefinition)
   )
 
   // ======================================================
@@ -35,11 +35,11 @@ function createModule(namespace, createDefinition) {
   // ----------------------------------
   // Ensure that the generated definition conforms to the required interface.
   invariant(
-    objectClass(definition) === 'object',
+    getClass(definition) === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The value ` +
     'returned from \`createDefinition\` must be an object. Instead, what was ' +
     'received was of type: %s.',
-    objectClass(definition)
+    getClass(definition)
   )
   invariant(
     definition.initialState !== null && definition.initialState !== undefined,
@@ -47,28 +47,28 @@ function createModule(namespace, createDefinition) {
     'returned from \`createDefinition\` must define an \`initialState\` ' +
     'property that is a not a null or undefined value. Instead, what was ' +
     'received was of type: %s.',
-    objectClass(definition.initialState)
+    getClass(definition.initialState)
   )
   invariant(
-    objectClass(definition.events) === 'object',
+    getClass(definition.events) === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
     'returned from \`createDefinition\` must define an \`events\` property ' +
     'that is an object. Instead, what was received was of type: %s.',
-    objectClass(definition.events)
+    getClass(definition.events)
   )
   invariant(
-    objectClass(definition.handlers) === 'object',
+    getClass(definition.handlers) === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
     'returned from \`createDefinition\` must define a \`handlers\` property ' +
     'that is an object. Instead, what was received was of type: %s.',
-    objectClass(definition.handlers)
+    getClass(definition.handlers)
   )
   invariant(
-    objectClass(definition.selectors) === 'object',
+    getClass(definition.selectors) === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
     'returned from \`createDefinition\` must define a \`selectors\` property ' +
     'that is an object. Instead, what was received was of type: %s.',
-    objectClass(definition.selectors)
+    getClass(definition.selectors)
   )
 
   // ----------------------------------
@@ -79,10 +79,10 @@ function createModule(namespace, createDefinition) {
   const eventErrors = eventTypes.reduce((errors, eventType) => {
     const creator = definition.events[eventType]
     const handler = definition.handlers[eventType]
-    if (objectClass(creator) !== 'function') {
+    if (getClass(creator) !== 'function') {
       return errors.concat([
         `Event ${eventType} did not define a valid event creator; its value ` +
-        `must be a function, but instead was: ${objectClass(creator)}.`,
+        `must be a function, but instead was: ${getClass(creator)}.`,
       ])
     }
     if (!handler) {
@@ -91,7 +91,7 @@ function createModule(namespace, createDefinition) {
         `your definition object provides a function on \`handlers.${eventType}\`.`,
       ])
     }
-    if (objectClass(handler) !== 'function') {
+    if (getClass(handler) !== 'function') {
       return errors.concat([
         `Event ${eventType} is defined as a property on your definition ` +
         'object, but it is not a function. Please check its type.',
