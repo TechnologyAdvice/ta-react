@@ -63,6 +63,13 @@ function createModule(namespace, createDefinition) {
     'that is an object. Instead, what was received was of type: %s.',
     objectClass(definition.handlers)
   )
+  invariant(
+    objectClass(definition.selectors) === 'object',
+    `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
+    'returned from \`createDefinition\` must define a \`selectors\` property ' +
+    'that is an object. Instead, what was received was of type: %s.',
+    objectClass(definition.selectors)
+  )
 
   // ----------------------------------
   // Validate Events and Handlers
@@ -143,12 +150,31 @@ function createModule(namespace, createDefinition) {
   }, {})
 
   // ----------------------------------
+  // Selectors
+  // ----------------------------------
+  // Generate selectors that provide minimal validation help.
+  generatedModule.selectors = Object.keys(definition.selectors).reduce((acc, selectorName) => {
+    function generatedSelector(...args) {
+      invariant(
+        args.length > 0,
+        `${namespace}.selectors.${selectorName} was called with no arguments. ` +
+        'At least one argument, state, is required.'
+      )
+
+      definition.selectors[selectorName](...args)
+    }
+
+    acc[selectorName] = generatedSelector
+
+    return acc
+  })
+
+  // ----------------------------------
   // Others
   // ----------------------------------
   // Expose keys where no transformations are needed.
   generatedModule.initialState = { ...definition.initialState }
   generatedModule.handlers = { ...definition.handlers }
-  generatedModule.selectors = { ...definition.selectors }
   generatedModule.actions = { ...definition.actions }
 
   return generatedModule
