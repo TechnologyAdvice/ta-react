@@ -1,6 +1,6 @@
 import invariant from 'invariant'
 import createReducer from './create-reducer'
-import { mapKeys } from '../lib'
+import { mapKeys, objectClass } from '../lib'
 
 function createModule(namespace, createDefinition) {
   // ======================================================
@@ -8,17 +8,17 @@ function createModule(namespace, createDefinition) {
   // ======================================================
   // Ensure that a valid namespace and definition creator were provided.
   invariant(
-    typeof namespace === 'string',
+    objectClass(namespace) === 'string',
     '`createModule` requires a string argument `namespace` to identify your ' +
     'module. Instead, what was received was of type: %s.',
-    typeof namespace
+    objectClass(namespace)
   )
   invariant(
-    typeof createDefinition === 'function',
+    objectClass(createDefinition) === 'function',
     '`createModule` requires an argument `createDefinition` which must be a ' +
     `function. Instead, while, generating the module for the "${namespace}" ` +
     'namespace, what was received was of type: %s.',
-    typeof createDefinition
+    objectClass(createDefinition)
   )
 
   // ======================================================
@@ -35,33 +35,33 @@ function createModule(namespace, createDefinition) {
   // ----------------------------------
   // Ensure that the generated definition conforms to the required interface.
   invariant(
-    typeof definition === 'object',
+    objectClass(definition) === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The value ` +
     'returned from \`createDefinition\` must be an object. Instead, what was ' +
     'received was of type: %s.',
-    typeof definition
+    objectClass(definition)
   )
   invariant(
-    definition.initialState != null, // eslint-disable-line
+    definition.initialState !== null && definition.initialState !== undefined,
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
     'returned from \`createDefinition\` must define an \`initialState\` ' +
     'property that is a not a null or undefined value. Instead, what was ' +
     'received was of type: %s.',
-    typeof definition.initialState
+    objectClass(definition.initialState)
   )
   invariant(
-    typeof definition.events === 'object',
+    objectClass(definition.events) === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
     'returned from \`createDefinition\` must define an \`events\` property ' +
     'that is an object. Instead, what was received was of type: %s.',
-    typeof definition.events
+    objectClass(definition.events)
   )
   invariant(
-    typeof definition.handlers === 'object',
+    objectClass(definition.handlers) === 'object',
     `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
     'returned from \`createDefinition\` must define a \`handlers\` property ' +
     'that is an object. Instead, what was received was of type: %s.',
-    typeof definition.handlers
+    objectClass(definition.handlers)
   )
 
   // ----------------------------------
@@ -72,10 +72,10 @@ function createModule(namespace, createDefinition) {
   const eventErrors = eventTypes.reduce((errors, eventType) => {
     const creator = definition.events[eventType]
     const handler = definition.handlers[eventType]
-    if (typeof creator !== 'function') {
+    if (objectClass(creator) !== 'function') {
       return errors.concat([
         `Event ${eventType} did not define a valid event creator; its value ` +
-        `must be a function, but instead was: ${typeof creator}.`,
+        `must be a function, but instead was: ${objectClass(creator)}.`,
       ])
     }
     if (!handler) {
@@ -84,7 +84,7 @@ function createModule(namespace, createDefinition) {
         `your definition object provides a function on \`handlers.${eventType}\`.`,
       ])
     }
-    if (typeof handler !== 'function') {
+    if (objectClass(handler) !== 'function') {
       return errors.concat([
         `Event ${eventType} is defined as a property on your definition ` +
         'object, but it is not a function. Please check its type.',
