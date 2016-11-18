@@ -63,6 +63,34 @@ function createModule(namespace, createDefinition) {
     'that is an object. Instead, what was received was of type: %s.',
     typeof definition.handlers
   )
+  if (definition.externalHandlers) {
+    invariant(
+      typeof definition.externalHandlers === 'object',
+      `Error in \`createModule\` for the "${namespace}" namespace. The object ` +
+      'returned from \`createDefinition\` defined an \`externalHandlers\` ' +
+      'property but it was not an object. Instead, what was received was of ' +
+      'type %s.',
+      typeof definition.externalHandlers
+    )
+    const externalHandlerErrors = Object.keys(definition.externalHandlers)
+      .reduce((errors, key) => {
+        if (!key || key === 'undefined') {
+          return errors.concat([
+            'An undefined or empty key was provided as a handled event type. ' +
+            'This is a common source of silent errors and is often caused by ' +
+            'a typo in a property accessor typo or by an invalid import.',
+          ])
+        }
+        return errors
+      }, [])
+    invariant(
+      !externalHandlerErrors.length,
+      `Error in \`createModule\` for the "${namespace}" namespace. All ` +
+      'externalHandlers defined must be valid. The following issues were ' +
+      'found:\n%s',
+      externalHandlerErrors.map(err => `> ${err}`).join('\n')
+    )
+  }
 
   // ----------------------------------
   // Validate Events and Handlers
@@ -118,9 +146,13 @@ function createModule(namespace, createDefinition) {
   // ----------------------------------
   // Reducer
   // ----------------------------------
+  const generatedHandlers = {
+    ...mapKeys(generateConstant, definition.handlers),
+    ...definition.externalHandlers,
+  }
   // Generate reducer based on provided event handlers.
   generatedModule.reducer = createReducer(
-    mapKeys(generateConstant, definition.handlers),
+    mapKeys(generateConstant, generatedHandlers),
     definition.initialState
   )
 
@@ -147,7 +179,7 @@ function createModule(namespace, createDefinition) {
   // ----------------------------------
   // Expose keys where no transformations are needed.
   generatedModule.initialState = { ...definition.initialState }
-  generatedModule.handlers = { ...definition.handlers }
+  generatedModule.handlers = generatedHandlers
   generatedModule.selectors = { ...definition.selectors }
   generatedModule.actions = { ...definition.actions }
 
