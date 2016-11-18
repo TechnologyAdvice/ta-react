@@ -146,15 +146,11 @@ function createModule(namespace, createDefinition) {
   // ----------------------------------
   // Reducer
   // ----------------------------------
-  const generatedHandlers = {
+  // Generate reducer based on provided event handlers.
+  generatedModule.reducer = createReducer({
     ...mapKeys(generateConstant, definition.handlers),
     ...definition.externalHandlers,
-  }
-  // Generate reducer based on provided event handlers.
-  generatedModule.reducer = createReducer(
-    mapKeys(generateConstant, generatedHandlers),
-    definition.initialState
-  )
+  }, definition.initialState)
 
   // ----------------------------------
   // Events
@@ -179,7 +175,8 @@ function createModule(namespace, createDefinition) {
   // ----------------------------------
   // Expose keys where no transformations are needed.
   generatedModule.initialState = { ...definition.initialState }
-  generatedModule.handlers = generatedHandlers
+  generatedModule.handlers = { ...definition.handlers }
+  generatedModule.externalHandlers = { ...definition.externalHandlers }
   generatedModule.selectors = { ...definition.selectors }
   generatedModule.actions = { ...definition.actions }
 
