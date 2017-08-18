@@ -1,9 +1,0 @@
-{
-  "presets": ["es2015", "stage-1", "react"],
-  "plugins": [
-    ["transform-runtime", {
-      "polyfill": false,
-      "regenerator": false
-    }]
-  ]
-}

@@ -1,3 +1,4 @@
+.awcache
 .DS_STORE
 *.log
 coverage/
