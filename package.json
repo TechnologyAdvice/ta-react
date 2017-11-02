@@ -4,11 +4,14 @@
   "description": "Common React components and utilities",
   "main": "dist/index.js",
   "files": [
-    "dist",
-    "styles"
+    "index.js",
+    "index.d.ts",
+    "components",
+    "scss"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "start": "cd docs && gen start && cd -",
+    "build": "rm -rf dist; tsc",
     "release:major": "npm run build && ta-script npm/release major",
     "release:minor": "npm run build && ta-script npm/release minor",
     "release:patch": "npm run build && ta-script npm/release patch"
@@ -24,15 +27,22 @@
   },
   "homepage": "https://github.com/technologyadvice/ta-react#readme",
   "dependencies": {
+    "bootstrap": "^4.0.0-beta.2",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
     "mobx": "^3.2.2",
-    "mobx-react": "^4.2.2"
+    "mobx-react": "^4.2.2",
+    "prop-types": "^15.6.0",
+    "react-select": "^1.0.0-rc.10"
   },
   "devDependencies": {
+    "@technologyadvice/genesis-core": "^0.15.3",
     "@types/node": "^8.0.24",
-    "@types/react": "^16.0.2",
-    "@types/react-dom": "^15.5.3",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "@types/prop-types": "^15.5.2",
+    "@types/react": "^16.0.19",
+    "@types/react-dom": "^16.0.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "ta-scripts": "^2.5.2",
     "typescript": "^2.4.2"
   }

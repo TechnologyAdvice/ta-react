@@ -1,0 +1,6 @@
+---
+globals:
+  __APP_ENV__: ${APP_ENV,development}
+vendors:
+  - react
+  - react-dom

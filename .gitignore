@@ -1,6 +1,9 @@
+.yarn-cache
 .awcache
 .DS_STORE
 *.log
 coverage/
 node_modules/
 dist/
+components
+stores
