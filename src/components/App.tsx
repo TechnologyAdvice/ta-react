@@ -1,20 +1,25 @@
 import * as React from 'react'
-import { observer, Provider as MobxProvider } from 'mobx-react'
-import NotificationProvider from './NotificationProvider'
+import { Provider as MobxProvider } from 'mobx-react'
 
 export interface AppProps {
   children: any,
-  store: any,
+  store?: any,
 }
-export const App = ({ children, store }: AppProps) => {
-  return (
-    <MobxProvider {...store}>
-      <div>
-        <NotificationProvider />
-        {children}
-      </div>
-    </MobxProvider>
-  )
+export interface AppState {
+  modal: {
+    open: boolean,
+    component: any,
+    props: any,
+  },
+}
+class App extends React.Component<AppProps> {
+  render () {
+    return (
+      <MobxProvider {...this.props.store}>
+        {this.props.children}
+      </MobxProvider>
+    )
+  }
 }
 
-export default observer(App)
+export default App
